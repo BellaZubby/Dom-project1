@@ -1,15 +1,15 @@
-// getting the products with returns a nodelist of all item with that class and it contents.
+// getting the products which returns a NodeList of all item with that class and it contents.
 const productList = document.querySelectorAll(".product");
 // globally accessing the total element
 const total = document.querySelector(".total");
 
-// converting the total to a number to ensure arithmetic operations.
+// converting the total to a number after removing non numeric characters eg ($), to ensure arithmetic operations.
 let totalAmount = Number(total.innerHTML.replace(/[^0-9.]/g, ''));
 console.log(totalAmount);
 
 console.log(productList);
 
-// using the forEach array method to access each element of the returned HTML collections.
+// using the forEach array method to access each element of the returned NodeList.
 productList.forEach((product) => {
     // accessing each element of the product to ensure independent behaviour of the click events for each product.
     const increaseBtn = product.querySelector(".fa-plus-circle");
@@ -23,7 +23,7 @@ productList.forEach((product) => {
     // converting the quantity to a number to allow for arithemtic operations
     let  currQuantity = Number(quantity.innerHTML);
 
-    // converting the unit price to a number after removing non numeric characters eg ($).
+    // converting the unit price to a number after removing non numeric characters eg ($), to ensure arithmetic operations.
     let unitPriceValue = Number(unitPrice.innerHTML.replace(/[^0-9.]/g, ''));
 
     console.log(unitPriceValue);
