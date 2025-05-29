@@ -5,9 +5,6 @@ const total = document.querySelector(".total");
 
 // converting the total to a number after removing non numeric characters eg ($), to ensure arithmetic operations.
 let totalAmount = Number(total.innerHTML.replace(/[^0-9.]/g, ''));
-console.log(totalAmount);
-
-console.log(productList);
 
 // using the forEach array method to access each element of the returned NodeList.
 productList.forEach((product) => {
@@ -18,7 +15,6 @@ productList.forEach((product) => {
     const unitPrice = product.querySelector(".unit-price");
     const trash = product.querySelector(".fa-trash-alt");
     const like = product.querySelector(".fa-heart");
-    console.log(like);
     
     // converting the quantity to a number to allow for arithemtic operations
     let  currQuantity = Number(quantity.innerHTML);
@@ -39,6 +35,7 @@ productList.forEach((product) => {
         // update the dom with the new values of quantity and total
         quantity.innerHTML = currQuantity;
         total.innerHTML = `${totalAmount} $`;
+        
     }
 
     // function to reduces item quantity on the click of the minus (-)
@@ -53,8 +50,8 @@ productList.forEach((product) => {
         currQuantity -= 1;
         console.log(currQuantity);
 
-         // gets the current total amount and decrements it by the unit price of clicked product.
-        totalAmount -= unitPriceValue;
+        // gets the current total amount and decrements it by the unit price of clicked product.
+        totalAmount = Math.max(0, totalAmount - unitPriceValue);
 
         // update the dom with the new values of quantity and total
         quantity.innerHTML = currQuantity;
@@ -63,25 +60,17 @@ productList.forEach((product) => {
 
     // delete an item
     function deleteCartItem() {
-        if (currQuantity === 0) {
-            alert("Item not in the cart!");
-            return;
-        }
         // gets the totalAmount of the item deleted by multiplying its quantity by its unit price.
         let totalOfRemovedItem = unitPriceValue * currQuantity;
         
         // this line of code ensures the total amount never becomes a negative value.
         totalAmount = Math.max(0, totalAmount - totalOfRemovedItem);
 
-        // resets the quantity of that particular item to zero
-        currQuantity = 0;
-        
-        // updates the dom with the new values for item quantity and total.
-        quantity.innerHTML = currQuantity;
+        // removes item entirely from the cart by applying it on the element directly.
+        product.remove();
         total.innerHTML = `${totalAmount} $`;
         alert("item successfully removed!");
     }
-
     // connecting each element that activates the call back function based on an event using the addEventlistener() method.
     increaseBtn.addEventListener("click", increaseQuantity);
     reduceBtn.addEventListener("click", reduceQuantity);
